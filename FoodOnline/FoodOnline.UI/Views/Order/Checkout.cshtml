@@ -1,0 +1,164 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+@model FoodOnline.Application.DTOs.PostDTO.OrderPostDTO
+
+<div class="container mt-5 pt-5">
+    <form asp-action="Checkout" asp-controller="Order" method="post" class="row">
+        <div class="col-md-4 order-md-2 mb-4">
+            <h4 class="d-flex justify-content-between align-items-center mb-3">
+                <span class="text-muted">Your cart</span>
+                <span class="badge badge-secondary badge-pill">@ViewBag.SelectedItems?.Count ?? 0</span>
+            </h4>
+            <ul class="list-group mb-3">
+                @if (ViewBag.SelectedItems != null && ViewBag.SelectedItems.Count > 0)
+                {
+                    double totalPrice = 0;
+                    for (int i = 0; i < ViewBag.SelectedItems.Count; i++)
+                    {
+                        double itemTotal = @ViewBag.SelectedItems[i].Product.UnitPrice * @ViewBag.SelectedItems[i].Quantity;
+                        totalPrice += itemTotal;
+                        <li class="list-group-item d-flex justify-content-between lh-condensed">
+                            <div>
+                                <input type="hidden" name="orderDetailPostDTOs[@i].ProductId" value="@ViewBag.SelectedItems[i].Product.Id" />
+                                <h6 class="my-0">@ViewBag.SelectedItems[i].Product.Name</h6>
+                                <small class="text-muted">@ViewBag.SelectedItems[i].Product.CategoryName</small>
+                            </div>
+                            <div>
+                                <input type="hidden" name="orderDetailPostDTOs[@i].Quantity" value="@ViewBag.SelectedItems[i].Quantity" />
+                                <h6 class="my-0">Quantity: @ViewBag.SelectedItems[i].Quantity</h6>
+                                <input type="hidden" name="orderDetailPostDTOs[@i].UnitPrice" value="@ViewBag.SelectedItems[i].Product.UnitPrice" />
+                                <small class="text-muted">Unit Price: @ViewBag.SelectedItems[i].Product.UnitPrice.ToString("N0", new System.Globalization.CultureInfo("vi-VN"))</small>
+                            </div>
+                            <span class="text-muted">@itemTotal.ToString("N0", new System.Globalization.CultureInfo("vi-VN"))</span>
+                        </li>
+                    }
+                    var totalWithShipping = totalPrice + ViewBag.ShippingFee.Fee;
+                    <li class="list-group-item d-flex justify-content-between bg-light">
+                        <span>Shipping fee</span>
+                        <strong>@ViewBag.ShippingFee.Fee.ToString("N0", new System.Globalization.CultureInfo("vi-VN"))</strong>
+                        <input type="hidden" class="form-control" asp-for="@Model.BranchId" value="@ViewBag.ShippingFee.BranchId">
+                        <input type="hidden" class="form-control" asp-for="@Model.ShippingFee" value="@ViewBag.ShippingFee.Fee">
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between">
+                        <span>Total (VND)</span>
+                        <strong>@totalWithShipping.ToString("N0", new System.Globalization.CultureInfo("vi-VN"))</strong>
+                        <input type="hidden" class="form-control" asp-for="@Model.TotalPrice" value="@totalWithShipping">
+                    </li>
+                }
+                else
+                {
+                    <li class="list-group-item">No items selected</li>
+                }
+
+                @{
+                    if(!string.IsNullOrEmpty(ViewBag.Errors)){
+                        <span class="text-danger">@ViewBag.Errors</span>
+                    }
+                }
+            </ul>
+        </div>
+
+        <div class="col-md-8 order-md-1">
+            <h4 class="mb-3">Billing address</h4>
+
+            <div class="mb-3">
+                <label for="username">Receiver Name</label>
+                <div class="input-group">
+                    <input type="text" class="form-control" asp-for="@Model.ReceiverName" required>
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <label for="email">Email <span class="text-muted">(Optional)</span></label>
+                <input type="email" class="form-control" asp-for="@Model.Email">
+                <span asp-validation-for="@Model.Email"></span>
+            </div>
+
+            <div class="mb-3">
+                <label for="phone">Phone number <span class="text-muted">(Optional)</span></label>
+                <input type="text" class="form-control" asp-for="@Model.PhoneNumber">
+                <span asp-validation-for="@Model.PhoneNumber"></span>
+            </div>
+
+            <div class="mb-3">
+                <label for="address">Address</label>
+                <input type="text" class="form-control" asp-for="@Model.ReceiverAddress" required>
+                <span asp-validation-for="@Model.ReceiverAddress"></span>
+            </div>
+
+            <div class="mb-3">
+                <label for="note">Note</label>
+                <div class="input-group">
+                    <input type="text" class="form-control" asp-for="@Model.Note" required>
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <label for="receiveDate">Receive Date</label>
+                <input type="date" class="form-control" asp-for="@Model.ReceivedDate" id="receiveDate" required>
+                <span asp-validation-for="@Model.ReceivedDate"></span>
+            </div>
+
+            <div class="mb-3">
+                <label for="receiveTime">Receive Hour</label>
+                <select id="receiveTime" asp-for="@Model.ReceivedTime" class="form-control">
+                    @foreach (var slot in ViewBag.SelectedTimeSlot)
+                    {
+                        <option value="@slot">@slot</option>
+                    }
+                </select>
+                <span asp-validation-for="@Model.ReceivedTime"></span>
+            </div>
+
+            <hr class="mb-4">
+
+            <h4 class="mb-3">Payment</h4>
+
+            <div class="d-block my-3">
+                <div class="custom-control custom-radio">
+                    <input id="cod" asp-for="@Model.IsCOD" type="radio" class="custom-control-input" value="true" required>
+                    <label class="custom-control-label" for="cod">Ship COD</label>
+                </div>
+                <div class="custom-control custom-radio">
+                    <input id="paypal" asp-for="@Model.IsCOD" type="radio" class="custom-control-input" value="false" required>
+                    <label class="custom-control-label" for="online">Thanh toán Online(QR code)</label>
+                </div>
+            </div>
+
+            <hr class="mb-4">
+            <button class="btn btn-primary btn-lg btn-block" type="submit">Continue to checkout</button>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+   
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var today = new Date().toISOString().split('T')[0];
+            document.getElementById('receiveDate').setAttribute('min', today);
+
+            document.getElementById('receiveDate').addEventListener('change', function () {
+                var selectedDate = new Date(this.value);
+                var today = new Date();
+                var timeDropdown = document.getElementById('receiveTime');
+
+                if (selectedDate.toDateString() === today.toDateString()) {
+                    var currentTime = today.getHours() + ':' + today.getMinutes();
+                    var options = timeDropdown.options;
+
+                    for (var i = options.length - 1; i >= 0; i--) {
+                        var optionTime = options[i].value;
+                        if (optionTime <= currentTime) {
+                            options[i].remove();
+                        }
+                    }
+                }
+            });
+        });
+    </script>
+}

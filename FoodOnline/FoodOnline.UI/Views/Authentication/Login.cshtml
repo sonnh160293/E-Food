@@ -1,0 +1,83 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    Layout = null;
+}
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@model FoodOnline.Application.DTOs.ViewModel.LoginViewModel
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <title>Registration Form</title>
+
+    <link href="~/css/styles.css" rel="stylesheet" />
+    <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
+    <style>
+        .gradient-custom {
+            background: linear-gradient(to bottom right, rgba(240, 147, 251, 1), rgba(245, 87, 108, 1));
+        }
+    </style>
+</head>
+<body class="sb-nav-fixed">
+    <section class="vh-100 gradient-custom">
+        <div class="container py-5 h-100">
+            <div class="row justify-content-center align-items-center h-100">
+                <div class="col-12 col-lg-9 col-xl-7">
+                    <div class="card shadow-2-strong card-registration" style="border-radius: 15px;">
+                        <div class="card-body p-4 p-md-5">
+                            <h3 class="mb-4 pb-2 pb-md-0 mb-md-5">Login</h3>
+                            <form asp-action="Login" method="post" asp-controller="Authentication">
+
+
+                                <div class="row mb-4">
+                                    <div class="col-md-12">
+                                        <div class="form-outline">
+                                            <label asp-for="Email" class="form-label"></label>
+                                            <input asp-for="Email" type="text" class="form-control form-control-lg" />
+                                            <span asp-validation-for="Email" class="text-danger"></span>
+                                            <input type="hidden" asp-for="ReturnUrl" value="@ViewData["ReturnUrl"]" />
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                <div class="row mb-4">
+                                    <div class="col-md-12">
+                                        <div class="form-outline">
+                                            <label asp-for="Password" class="form-label"></label>
+                                            <input asp-for="Password" type="password" class="form-control form-control-lg" />
+                                            <span asp-validation-for="Password" class="text-danger"></span>
+                                        </div>
+                                    </div>
+                                   
+                                </div>
+
+                                
+
+
+
+
+
+                                <div class="mt-4 pt-2">
+                                    <input type="submit" class="btn btn-primary btn-lg" value="Submit" />
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="~/js/site.js"></script>
+    <script src="~/js/address.js"></script>
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+
+</body>
+</html>

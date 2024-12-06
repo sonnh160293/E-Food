@@ -1,0 +1,94 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    Layout = "~/Areas/Administration/Views/Shared/_Layout.cshtml";
+}
+@model FoodOnline.Application.DTOs.ViewModel.OrderDetailViewModel
+
+
+
+<form id="updateOrderForm">
+    <input type="hidden" name="Id" value="@Model.Order.Id" />
+    <div class="form-group row mb-3 mt-5">
+        <label class="col-2" for="orderCode" style="font-weight:bold">Order Code:</label>
+        <input type="text" id="orderCode" class="col-4" value="@Model.Order.OrderCode" readonly />
+    </div>
+
+    <div class="form-group row mb-3">
+        <label class="col-2" for="status" style="font-weight:bold">Status:</label>
+        <select id="status" class=" col-4" asp-for="@Model.Order.StatusId" asp-items="Model.Statuses" name="StatusId">
+            <option value="">Select Status</option> <!-- Optional: Add a default placeholder option -->
+        </select>
+    </div>
+
+
+    <div class="form-group row">
+        <label class=" col-2" style="font-weight:bold">Order Date:</label>
+        <p class="col-3">@Model.Order.OrderedDate</p>
+    </div>
+
+    <div class="form-group row">
+        <label class=" col-2" style="font-weight:bold">Is Paid:</label>
+        <p class="col-3">@(Model.Order.IsPaid.HasValue ? (Model.Order.IsPaid.Value ? "Yes" : "No") : "N/A")</p>
+    </div>
+
+    <div class="form-group row">
+        <label class=" col-2" style="font-weight:bold">Is Confirmed:</label>
+        <p class="col-3">@(Model.Order.IsConfirm.HasValue ? (Model.Order.IsConfirm.Value ? "Yes" : "No") : "N/A")</p>
+    </div>
+
+    <div class="form-group row">
+        <label class=" col-2" style="font-weight:bold">Is COD:</label>
+        <p class="col-3">@(Model.Order.IsCOD.HasValue ? (Model.Order.IsCOD.Value ? "Yes" : "No") : "N/A")</p>
+    </div>
+
+
+    <h3>Order Details</h3>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Product Name</th>
+                <th>Quantity</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var detail in Model.OrderDetails)
+            {
+                <tr>
+                    <td>@detail.ProductName</td>
+                    <td>@detail.Quantity</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <button type="button" id="updateOrderButton" class="btn btn-primary">Update Order</button>
+</form>
+
+<div id="responseMessage" class="mt-3"></div>
+
+@section Scripts {
+   
+    <script>
+        $(document).ready(function () {
+            $('#updateOrderButton').click(function () {
+                $.ajax({
+                    url: '@Url.Action("UpdateOrder", "Order")',
+                    type: 'POST',
+                    data: $('#updateOrderForm').serialize(),
+                    success: function (response) {
+                        if (response.status) {
+                            $('#responseMessage').html('<div class="alert alert-success">' + response.message + '</div>');
+                        } else {
+                            $('#responseMessage').html('<div class="alert alert-danger">' + response.message + '</div>');
+                        }
+                    },
+                    error: function (xhr, status, error) {
+                        $('#responseMessage').html('<div class="alert alert-danger">An error occurred: ' + error + '</div>');
+                    }
+                });
+            });
+        });
+    </script>
+}

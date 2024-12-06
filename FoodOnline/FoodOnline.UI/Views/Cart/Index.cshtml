@@ -1,0 +1,176 @@
+﻿@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    double? totalCart = 0;
+    int totalCheckedItems = 0;
+}
+
+@model IEnumerable<FoodOnline.Application.DTOs.GetDTO.CartGetDTO>
+
+<style>
+    .card-registration .select-input.form-control[readonly]:not([disabled]) {
+        font-size: 1rem;
+        line-height: 2.15;
+        padding-left: .75em;
+        padding-right: .75em;
+    }
+
+    .card-registration .select-arrow {
+        top: 13px;
+    }
+
+    .disable-link {
+        pointer-events: none;
+        color: #999;
+        text-decoration: none;
+        cursor: not-allowed;
+        opacity: 0.7;
+    }
+</style>
+
+<section class="h-100 h-custom mt-5 pt-5">
+    <div class="container py-5 h-100">
+        <div class="row d-flex justify-content-center align-items-center h-100">
+            <div class="col-12">
+                <div class="card card-registration card-registration-2" style="border-radius: 15px;">
+                    <div class="card-body p-0">
+                        <div class="row g-0">
+                            <div class="col-lg-8">
+                                <div class="p-5">
+                                    <div class="d-flex justify-content-between align-items-center mb-5">
+                                        <button id="btnSaveCart" class="btn btn-outline-info btn-save-cart">Save</button>
+                                      
+                                        <h1 class="fw-bold mb-0">Shopping Cart</h1>
+                                        <h6 class="mb-0 text-muted"><span id="checkedItemsCount">0</span> items</h6>
+                                    </div>
+                                    @{
+                                        if (Model != null)
+                                        {
+                                            foreach (var item in Model)
+                                            {
+                                                        <hr class="my-4">
+                                                        <div class="row mb-4 d-flex justify-content-between align-items-center">
+                                                            <!-- Checkbox -->
+                                                            <div class="col-md-1 col-lg-1 col-xl-1">
+                                                                <input type="checkbox" class="form-check-input item-checkbox" data-price="@item.Product.UnitPrice * item.Quantity">
+                                                            </div>
+
+                                                            <!-- Product Image -->
+                                                            <div class="col-md-2 col-lg-2 col-xl-2">
+                                                                <img src="~/images/product/@item.Product.ImageURL" class="img-fluid rounded-3" alt="product">
+                                                            </div>
+
+                                                            <!-- Product Details -->
+                                                            <div class="col-md-2 col-lg-2 col-xl-2">
+                                                                <h6 class="text-muted">@item.Product.CategoryName</h6>
+                                                                <h6 class="mb-0">@item.Product.Name</h6>
+                                                            </div>
+
+                                                            <!-- Quantity Controls -->
+                                                            <div class="col-md-3 col-lg-3 col-xl-2 d-flex">
+                                                                <button class="btn btn-link px-2" onclick="this.parentNode.querySelector('input[type=number]').stepDown(); $(this).closest('div').find('.txt-quantity').trigger('input');">
+                                                                    <i class="fas fa-minus"></i>
+                                                                </button>
+
+                                                                <input id="form1" min="0" name="quantity" data-productId="@item.ProductId"
+                                                   type="number" class="form-control form-control-sm txt-quantity" asp-for="@item.Quantity" />
+
+                                                                <input name="id" data-id="@item.Id" type="hidden" asp-for="@item.Id" />
+
+                                                                <button class="btn btn-link px-2" onclick="this.parentNode.querySelector('input[type=number]').stepUp(); $(this).closest('div').find('.txt-quantity').trigger('input');">
+                                                                    <i class="fas fa-plus"></i>
+                                                                </button>
+                                                            </div>
+
+                                                            <!-- Unit Price -->
+                                                            <div class="col-md-2 col-lg-2 col-xl-2">
+                                                                <h6 class="mb-0 txt-price">@item.Product.UnitPrice.Value.ToString("N0", new System.Globalization.CultureInfo("vi-VN"))</h6>
+                                                            </div>
+
+                                                            <!-- Total Price (UnitPrice * Quantity) -->
+                                                            <div class="col-md-2 col-lg-2 col-xl-2">
+                                                                @{
+                                                            var total = item.Product.UnitPrice * item.Quantity;
+                                                            totalCart += total;
+                                                                }
+                                                                <h6 class="mb-0 txt-total">@total.Value.ToString("N0", new System.Globalization.CultureInfo("vi-VN"))</h6>
+                                                            </div>
+
+                                                            <!-- Remove Button -->
+                                                            <div class="col-md-1 col-lg-1 col-xl-1 text-end">
+                                                                <button class="text-muted btn-delete"><i class="fas fa-times"></i></button>
+                                                            </div>
+                                                        </div>
+                                            }
+                                        }
+                                        else
+                                        {
+                                                    <span>No items in cart</span>
+                                        }
+                                    }
+
+                                    <hr class="my-4">
+
+                                    <div class="pt-5">
+                                        <h6 class="mb-0">
+                                            <a href="/Product" class="text-body">
+                                                <i class="fas fa-long-arrow-alt-left me-2"></i>Back to shop
+                                            </a>
+                                        </h6>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-4 bg-body-tertiary">
+                                <div class="p-5">
+                                    <h3 class="fw-bold mb-5 mt-2 pt-1">Summary</h3>
+                                    <hr class="my-4">
+
+                                    <div class="d-flex justify-content-between mb-4">
+                                        <h5 class="text-uppercase">items <span id="totalCheckedItems">0</span></h5>
+                                        <h5 id="totalCart" class="txt-total-cart">@totalCart.Value.ToString("N0", new System.Globalization.CultureInfo("vi-VN"))</h5>
+                                    </div>
+
+                                    <h5 class="text-uppercase mb-3">Shipping</h5>
+
+                                    <div class="mb-4 pb-2">
+                                        <select data-mdb-select-init>
+                                            <option value="1">Standard-Delivery- €5.00</option>
+                                            <option value="2">Two</option>
+                                            <option value="3">Three</option>
+                                            <option value="4">Four</option>
+                                        </select>
+                                    </div>
+
+                                    <h5 class="text-uppercase mb-3">Give code</h5>
+
+                                    <div class="mb-5">
+                                        <div data-mdb-input-init class="form-outline">
+                                            <input type="text" id="form3Examplea2" class="form-control form-control-lg" />
+                                            <label class="form-label" for="form3Examplea2">Enter your code</label>
+                                        </div>
+                                    </div>
+
+                                    <hr class="my-4">
+
+                                    <div class="d-flex justify-content-between mb-5">
+                                        <h5 class="text-uppercase">Total price</h5>
+                                        <h5 class="txt-total-cart" id="checkedTotalPrice">@totalCart.Value.ToString("N0", new System.Globalization.CultureInfo("vi-VN"))</h5>
+                                    </div>
+
+                                    <button type="button" class="btn btn-danger btn-checkout @(Model is not null ? "" : "disable-link") ">Checkout</button>
+
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+@section Scripts {
+    
+    <script src="~/components/cart.js"></script>
+}

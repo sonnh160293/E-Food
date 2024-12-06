@@ -1,0 +1,6 @@
+services:
+  foodonline.ui:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+    ports:
+      - "80"

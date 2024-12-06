@@ -1,0 +1,58 @@
+﻿
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Areas/Administration/Views/Shared/_Layout.cshtml";
+}
+
+
+<h1>Product List</h1>
+<a class="btn btn-primary" asp-action="SaveData" asp-controller="Product" >
+    Add New Product
+</a>
+
+
+
+<table id="product-list" class="display" style="width:100%">
+    <thead>
+        <tr>
+
+            <th>Id</th>
+            <th>Name</th>
+            <th>Weight</th>
+            <th>Volume</th>
+            <th>Unit Price</th>
+            <th>Category</th>
+            <th>Last Modified Date</th>
+            <th>Last Modified By</th>
+        </tr>
+    </thead>
+
+
+
+    <tfoot>
+        <tr>
+
+
+            <th>Id</th>
+            <th>Name</th>
+            <th>Weight</th>
+            <th>Volume</th>
+            <th>Unit Price</th>
+            <th>Category</th>
+            <th>Last Modified Date</th>
+            <th>Last Modified By</th>
+
+        </tr>
+    </tfoot>
+</table>
+
+
+
+@section Scripts{
+
+    <script src="~/js/registerDatatable.js"></script>
+    <script src="~/components/product.js">
+
+    </script>
+}
+

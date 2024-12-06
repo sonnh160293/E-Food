@@ -1,0 +1,39 @@
+﻿@model FoodOnline.Application.DTOs.PostDTO.CategoryPostDTO
+
+<div class="modal fade" id="category-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+
+    <form asp-action="SaveData" asp-controller="Category" method="post" asp-antiforgery="true" id="form-category">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Add new category</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-floating mb-3">
+                        <input class="form-control" id="Id" type="hidden" asp-for="@Model.Id" />
+                        <input class="form-control" id="Name" type="text" placeholder="Name" asp-for="@Model.Name" />
+                        <label asp-for="@Model.Name">Name</label>
+                        <span class="text-danger" asp-validation-for="@Model.Name"></span>
+                    </div>
+
+                  
+
+                    <div class="form-floating mb-3">
+                        <input class="form-check-input" id="IsActive" type="checkbox" asp-for="@Model.IsActive" /> Is Active
+                    </div>
+                </div>
+
+
+
+
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button class="btn btn-primary" type="submit">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+

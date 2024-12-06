@@ -1,0 +1,10 @@
+.vs
+
+PublishProfiles
+bin/
+obj/
+out/
+*.tmp
+*.temp
+*.bak
+*.swp

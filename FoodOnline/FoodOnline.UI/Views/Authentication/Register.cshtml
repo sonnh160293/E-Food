@@ -1,0 +1,158 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    Layout = null;
+}
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@model FoodOnline.Application.DTOs.ViewModel.RegisterViewModel
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <title>Registration Form</title>
+
+    <link href="~/css/styles.css" rel="stylesheet" />
+    <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
+    <style>
+        .gradient-custom {
+            background: linear-gradient(to bottom right, rgba(240, 147, 251, 1), rgba(245, 87, 108, 1));
+        }
+    </style>
+</head>
+<body class="sb-nav-fixed">
+    <section class="vh-100 gradient-custom">
+        <div class="container py-5 h-100">
+            <div class="row justify-content-center align-items-center h-100">
+                <div class="col-12 col-lg-9 col-xl-7">
+                    <div class="card shadow-2-strong card-registration" style="border-radius: 15px;">
+                        <div class="card-body p-4 p-md-5">
+                            <h3 class="mb-4 pb-2 pb-md-0 mb-md-5">Registration Form</h3>
+                            <form asp-action="Register" method="post" asp-controller="Authentication">
+                                <div class="row mb-4">
+                                    <div class="col-md-6">
+                                        <div class="form-outline">
+                                            <label asp-for="UserName" class="form-label"></label>
+                                            <input asp-for="UserName" class="form-control form-control-lg" />
+                                            <span asp-validation-for="UserName" class="text-danger"></span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-outline">
+                                            <label asp-for="FullName" class="form-label"></label>
+                                            <input asp-for="FullName" class="form-control form-control-lg" />
+                                            <span asp-validation-for="FullName" class="text-danger"></span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row mb-4">
+                                    <div class="col-md-6">
+                                        <div class="form-outline">
+                                            <label asp-for="Password" class="form-label"></label>
+                                            <input asp-for="Password" type="password" class="form-control form-control-lg" />
+                                            <span asp-validation-for="Password" class="text-danger"></span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-outline">
+                                            <label asp-for="ConfirmPassword" class="form-label"></label>
+                                            <input asp-for="ConfirmPassword" type="password" class="form-control form-control-lg" />
+                                            <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row mb-4">
+                                    <div class="col-md-6">
+                                        <div class="form-outline">
+                                            <label asp-for="Email" class="form-label"></label>
+                                            <input asp-for="Email" type="email" class="form-control form-control-lg" />
+                                            <span asp-validation-for="Email" class="text-danger"></span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-outline">
+                                            <label asp-for="Phone" class="form-label"></label>
+                                            <input asp-for="Phone" type="tel" class="form-control form-control-lg" />
+                                            <span asp-validation-for="Phone" class="text-danger"></span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row mb-4">
+                                    <h4 class="text-danger">Dịch vụ của chúng tôi hiện tại chỉ hộ trợ các Quận nội thành. Xin lỗi vì sự bất tiện này!</h4>
+                                    <div class="col-md-12">
+                                        <div class="form-outline">
+                                            <select id="City" name="City" class="form-control form-control-lg bg-light fs-6" asp-for="City" required>
+                                                 <option value="" selected>Select your city</option>
+                                            </select>
+                                            <span class="text-danger" asp-validation-for="City"></span>
+                                        </div>
+                                    </div>
+                                    
+                                </div>
+
+                                <div class="row mb-4">
+                                    <div class="col-md-12">
+                                        <div class="form-outline">
+                                            <select id="District" name="District" class="form-control form-control-lg bg-light fs-6" asp-for="District" required>
+                                                <option value="" selected>Select your District</option>
+                                            </select>
+                                            <span class="text-danger" asp-validation-for="District"></span>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+
+                                <div class="row mb-4">
+                                    <div class="col-md-12">
+                                        <div class="form-outline">
+                                            <select id="Ward" name="Ward" class="form-control form-control-lg bg-light fs-6" asp-for="Ward" required>
+                                                <option value="" selected>Select your Ward</option>
+                                            </select>
+                                            <span class="text-danger" asp-validation-for="Ward"></span>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+
+                                <div class="row mb-4">
+                                    <div class="col-md-12">
+                                        <div class="form-outline">
+                                            <input class="form-control" id="Detail" type="text" placeholder="Detail" asp-for="Detail" required />
+                                            <label asp-for="Detail"></label>
+                                            <span class="text-danger" asp-validation-for="Detail"></span>
+                                        </div>
+                                    </div>
+
+                                </div>
+                              
+
+
+
+                               
+
+                                <div class="mt-4 pt-2">
+                                    <input type="submit" class="btn btn-primary btn-lg" value="Submit" />
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="~/js/site.js"></script>
+    <script src="~/js/address.js"></script>
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+
+</body>
+</html>

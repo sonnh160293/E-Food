@@ -1,0 +1,28 @@
+services:
+  foodonline.ui:
+    image: ${DOCKER_REGISTRY-}foodonlineui
+    build:
+      context: .
+      dockerfile: FoodOnline.UI/Dockerfile
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ConnectionStrings__MyCnn=Server=sqlserver,1433;Database=FoodOnline;User Id=sa;Password=son123456789#;
+    ports:
+      - "5243:8080"
+    depends_on:
+      - foodDb
+
+  foodDb:
+    image: mcr.microsoft.com/mssql/server
+    container_name: sqlserver
+    environment:
+      - ACCEPT_EULA=Y
+      - SA_PASSWORD=son123456789#
+    restart: always
+    ports:
+      - "1433:1433"
+    volumes:
+      - sqlserverdata:/var/opt/mssql
+
+volumes:
+  sqlserverdata:

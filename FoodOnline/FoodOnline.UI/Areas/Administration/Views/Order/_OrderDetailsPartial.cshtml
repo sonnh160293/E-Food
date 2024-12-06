@@ -1,0 +1,67 @@
+﻿@model FoodOnline.Application.DTOs.ViewModel.OrderDetailViewModel
+
+
+
+                <div class="modal fade" id="orderModal" tabindex="-1" aria-labelledby="orderModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="orderModalLabel">Order Details</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p><strong>Order Code:</strong> @Model.Order.OrderCode</p>
+
+                <div class="mb-3">
+                    <label for="statusSelect" class="form-label"><strong>Status:</strong></label>
+                    @Html.DropDownListFor(model => model.SelectedStatusId, Model.Statuses, "Select Status", new { @class = "form-select", id = "statusSelect" })
+                </div>
+
+
+                <p>
+                    <strong>Payment:</strong>
+                    @{
+                        if (Model.Order.IsPaid == true)
+                        {
+                            <span>Đã thanh toán</span>
+                        }
+                        else
+                        {
+                            <span>Chưa thanh toán</span>
+                        }
+                    }
+                <p>
+                    <strong>Confirmation:</strong>
+                        @{
+                            if (Model.Order.IsConfirm == true)
+                            {
+                            <span>Đã xác nhận</span>
+                            }
+                            else
+                            {
+                            <span>Chưa xác nhận</span>
+                            }
+                        }
+                <p>
+                    <strong>Payment Type:</strong>
+                            @{
+                                if (Model.Order.IsCOD == true)
+                                {
+                            <span>COD</span>
+                                }
+                                else
+                                {
+                            <span>Online</span>
+                                }
+                            }
+                <p><strong>Ordered Date:</strong> @Model.Order.OrderedDate?.ToString("dd/MM/yyyy")</p>
+
+                <!-- Add more order details as needed -->
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>

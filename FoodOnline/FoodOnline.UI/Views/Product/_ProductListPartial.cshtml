@@ -1,0 +1,17 @@
+﻿@model FoodOnline.Domain.Common.PaginatedList<FoodOnline.Application.DTOs.GetDTO.ProductGetDTO>
+
+<div class="row mb-3">
+    @foreach (var product in Model.Items)
+    {
+        <div class="col-md-4">
+            <div class="card product-card mt-3"  style="height: 430px; width:300px">
+                <img src="~/images/product/@product.ImageURL" class="card-img-top" alt="@product.Name" >
+                <div class="card-body">
+                    <h5 class="card-title">@product.Name</h5>
+                    <p class="card-text">$@product.UnitPrice</p>
+                    <a class="btn btn-success btn-add-to-cart" data-code="@product.Id">Add to Cart</a>
+                </div>
+            </div>
+        </div>
+    }
+</div>

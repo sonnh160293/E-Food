@@ -1,0 +1,63 @@
+﻿
+@{
+    ViewData["Title"] = "Insert";
+    Layout = "~/Areas/Administration/Views/Shared/_Layout.cshtml";
+}
+@model FoodOnline.Application.DTOs.PostDTO.AccountPostDTO
+
+<h1>Insert</h1>
+
+
+@{
+    if(!string.IsNullOrEmpty(ViewBag.Errors)){
+    <span class="text-danger">@ViewBag.Errors</span>
+    }
+}
+
+
+<div class="row">
+    <div class="col-md-6">
+        <form asp-action="Insert" method="post">
+            <div class="form-group">
+                <label asp-for="RoleName" class="control-label"></label>
+                <select asp-for="RoleName" class="form-control" asp-items="ViewBag.Roles">
+                    <option value="">-- Select Role --</option>
+                </select>
+                <span asp-validation-for="RoleName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="UserName" class="control-label"></label>
+                <input asp-for="UserName" class="form-control" />
+                <span asp-validation-for="UserName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="FullName" class="control-label"></label>
+                <input asp-for="FullName" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label asp-for="Password" class="control-label"></label>
+                <input asp-for="Password" type="password" class="form-control" />
+                <span asp-validation-for="Password" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Email" class="control-label"></label>
+                <input asp-for="Email" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label asp-for="Phone" class="control-label"></label>
+                <input asp-for="Phone" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label asp-for="BranchId" class="control-label">Branch</label>
+                <select asp-for="BranchId" class="form-control" asp-items="ViewBag.Branches">
+                    <option value="">-- Select Branch --</option>
+                </select>
+            </div>
+            <div class="form-group form-check">
+                <input asp-for="IsActive" class="form-check-input" />
+                <label asp-for="IsActive" class="form-check-label"></label>
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+    </div>
+</div>

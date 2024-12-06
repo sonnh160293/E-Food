@@ -1,0 +1,67 @@
+﻿@model FoodOnline.Application.DTOs.PostDTO.BranchPostDTO
+
+<div class="modal fade" id="branch-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <form asp-action="CreateBranch" asp-controller="Branch" method="post" asp-antiforgery="true" id="form-branch">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Add new Branch</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-floating mb-3">
+                        <input class="form-control" id="Name" type="text" placeholder="Name" asp-for="Name" required />
+                        <label asp-for="Name">Name</label>
+                        <span class="text-danger" asp-validation-for="Name"></span>
+                    </div>
+
+
+
+                    <div class="form-floating mb-3">
+                        <select id="City" name="City" class="form-control form-control-lg bg-light fs-6" asp-for="City" required>
+                            <option value="" selected>Select your city</option>
+                        </select>
+                        <span class="text-danger" asp-validation-for="City"></span>
+                    </div>
+
+                    <div class="form-floating mb-3">
+                        <select id="District" name="District" class="form-control form-control-lg bg-light fs-6" asp-for="District" required>
+                            <option value="" selected>Select your District</option>
+                        </select>
+                        <span class="text-danger" asp-validation-for="District"></span>
+                    </div>
+
+                    <div class="form-floating mb-3">
+                        <select id="Ward" name="Ward" class="form-control form-control-lg bg-light fs-6" asp-for="Ward" required>
+                            <option value="" selected>Select your Ward</option>
+                        </select>
+                        <span class="text-danger" asp-validation-for="Ward"></span>
+                    </div>
+
+
+
+                    <div class="form-floating mb-3">
+                        <input class="form-control" id="Detail" type="text" placeholder="Detail" asp-for="Detail" required />
+                        <label asp-for="Detail">Detail</label>
+                        <span class="text-danger" asp-validation-for="Detail"></span>
+                    </div>
+
+                    <div class="form-check mb-3">
+                        <input class="form-check-input" id="IsActive" type="checkbox" name="IsActive" value="true" @(Model.IsActive == true ? "checked" : "") />
+                        <label class="form-check-label" for="IsActive">Is Active</label>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button class="btn btn-primary" type="submit">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.3/dist/jquery.validate.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jquery-validation-unobtrusive@3.2.12/dist/jquery.validate.unobtrusive.min.js"></script>

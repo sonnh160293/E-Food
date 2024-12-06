@@ -1,0 +1,51 @@
+﻿@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Areas/Administration/Views/Shared/_Layout.cshtml";
+}
+
+@model FoodOnline.Application.DTOs.PostDTO.CategoryPostDTO
+
+
+<h1>Category List</h1>
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#category-modal">
+    Add New Category
+</button>
+
+@await Html.PartialAsync("~/Areas/Administration/Views/Category/_SaveModal.cshtml", Model)
+
+<table id="category-list" class="display" style="width:100%">
+    <thead>
+        <tr>
+
+            <th>Id</th>
+            <th>Name</th>
+            <th>Status</th>    
+            <th>Last Modified Date</th>
+            <th>Last Modified By</th>
+        </tr>
+    </thead>
+
+
+
+    <tfoot>
+        <tr>
+
+            <th>Id</th>
+            <th>Name</th>
+            <th>Status</th>
+            <th>Last Modified Date</th>
+            <th>Last Modified By</th>
+          
+        </tr>
+    </tfoot>
+</table>
+
+
+
+@section Scripts{
+   
+    <script src="~/js/registerDatatable.js"></script>
+    <script src="~/components/category.js">
+
+    </script>
+}
